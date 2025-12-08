@@ -1,12 +1,9 @@
-````markdown
 # AI Internship Scorer
 
-A practical career tool for students and junior engineers.  
-It aggregates real job postings, filters out misleading “junior” roles, and estimates your hiring probability using machine learning.
+A practical career tool for students and junior engineers.
 
 **Live Demo:** [Open App](https://internship-scorer-qz938xauxqfprc9b3cuq6b.streamlit.app/)
 
----
 
 ## Problem
 
