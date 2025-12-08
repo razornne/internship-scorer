@@ -6,3 +6,4 @@ pdfplumber
 plotly
 beautifulsoup4
 torch
+google-generativeai
