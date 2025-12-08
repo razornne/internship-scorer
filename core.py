@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from sentence_transformers import SentenceTransformer, util
-from pypdf import PdfReader
+import pdfplumber
 import re
 import os
 
@@ -31,14 +31,20 @@ class ScorerEngine:
         print("Model loaded.")
 
     def extract_text_from_pdf(self, uploaded_file):
+        """
+        Extract text using pdfplumber (better for multi-column layouts).
+        """
         try:
-            reader = PdfReader(uploaded_file)
             text = ""
-            for page in reader.pages:
-                t = page.extract_text()
-                if t: text += t + "\n"
+            # pdfplumber.open works directly with the BytesIO object from Streamlit
+            with pdfplumber.open(uploaded_file) as pdf:
+                for page in pdf.pages:
+                    # extract_text() handles layout analysis automatically
+                    page_text = page.extract_text()
+                    if page_text:
+                        text += page_text + "\n"
+            
             # Cleaning common artifacts
-            text = text.replace('  ', ' ').replace('\n', ' ')
             return text
         except Exception as e:
             return f"Error reading PDF: {e}"

@@ -2,7 +2,7 @@ streamlit
 pandas
 sentence-transformers
 scikit-learn
-pypdf
+pdfplumber
 plotly
 beautifulsoup4
 torch
