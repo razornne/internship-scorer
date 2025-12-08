@@ -86,8 +86,5 @@ streamlit run app.py
 ---
 
 Created by Mykyta Bulatnikov
-
-```
-
 ---
 
