@@ -46,7 +46,13 @@ def generate_cover_letter_gemini(api_key, cv_text, job_description, company_name
     
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        
+        # ИСПРАВЛЕНИЕ: Используем стандартную модель, которая доступна всем
+        try:
+            model = genai.GenerativeModel('gemini-1.5-flash')
+        except:
+            # Если Flash не работает, откатываемся на Pro
+            model = genai.GenerativeModel('gemini-pro')
         
         prompt = f"""
         Act as an expert career coach. Write a professional Cover Letter for a Junior IT position.
@@ -72,7 +78,7 @@ def generate_cover_letter_gemini(api_key, cv_text, job_description, company_name
             
     except Exception as e:
         return f"Error: {str(e)}"
-
+    
 # === MAIN ===
 st.title("🚀 AI Internship Scorer + Gemini 🤖")
 st.caption("Smart aggregator with LLM-powered Cover Letter Generator")
