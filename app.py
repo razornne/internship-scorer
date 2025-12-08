@@ -47,13 +47,14 @@ def generate_cover_letter_gemini(api_key, cv_text, job_description, company_name
     try:
         genai.configure(api_key=api_key)
         
-        # СПИСОК МОДЕЛЕЙ ДЛЯ ПЕРЕБОРА (От самой умной к самой простой)
-        # Мы пробуем их по очереди. Если одна падает с ошибкой, берем следующую.
+        # БЕРЕМ МОДЕЛИ ИЗ ТВОЕГО СПИСКА
+        # Первая - самая быстрая и оптимальная (Flash 2.0)
+        # Вторая - мощная (Pro 2.0), если первая не сработает
         candidate_models = [
-            'gemini-1.5-flash',
-            'gemini-1.5-flash-latest',
-            'gemini-pro',
-            'models/gemini-pro', # Иногда нужно полное имя
+            'models/gemini-2.0-flash',
+            'models/gemini-2.0-flash-exp',
+            'models/gemini-2.5-flash',
+            'models/gemini-pro-latest'
         ]
         
         model = None
@@ -63,17 +64,17 @@ def generate_cover_letter_gemini(api_key, cv_text, job_description, company_name
         for model_name in candidate_models:
             try:
                 model = genai.GenerativeModel(model_name)
-                # Тестовый пинг, чтобы проверить, работает ли модель
-                # (Мы не тратим токены, просто проверяем инициализацию)
+                # Пробный вызов не делаем, чтобы не тратить время,
+                # просто считаем, что если инициализация прошла - ок.
                 used_model_name = model_name
                 break
             except:
                 continue
         
         if not model:
-            return "❌ Error: No available Gemini models found for your API key. Try updating 'google-generativeai' library."
+            return "❌ Error: Could not load any Gemini model. Check API Key."
 
-        # Формируем промпт
+        # Промпт
         prompt = f"""
         Act as an expert career coach. Write a professional Cover Letter for a Junior IT position.
         
