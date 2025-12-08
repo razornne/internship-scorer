@@ -1,90 +1,93 @@
 ````markdown
-# 🚀 AI Internship Scorer
+# AI Internship Scorer
 
-**An intelligent career assistant for students and juniors in IT.**
-It aggregates real-time jobs, filters out "fake" entry-level roles, and calculates your hiring chances using Machine Learning.
+A practical career tool for students and junior engineers.  
+It aggregates real job postings, filters out misleading “junior” roles, and estimates your hiring probability using machine learning.
 
-🔗 **Live Demo:** [Open App](https://internship-scorer-qz938xauxqfprc9b3cuq6b.streamlit.app/)
+**Live Demo:** https://internship-scorer-qz938xauxqfprc9b3cuq6b.streamlit.app/
 
 ---
 
-## 🎯 The Problem
-Finding a true entry-level job is broken:
-* **Noise:** Job boards are flooded with "Junior" roles requiring 3+ years of experience.
-* **Mismatch:** Simple keyword search misses opportunities where skills are described differently.
-* **Uncertainty:** It's hard to know exactly which skills you are missing for a specific role.
+## Problem
 
-## 💡 The Solution
-This app acts as a smart filter between you and the job market. It uses **Hybrid Search** (Vectors + Keywords) to provide a transparent match score.
+Entry-level job search is inefficient. Most "junior" listings require years of experience, keyword search misses relevant roles, and candidates have no clear visibility into their actual skill gaps.
 
-### Key Features
-* **🕵️‍♂️ Live Data Aggregation:** Scrapes real jobs (focused on Prague/Remote) via JSearch API or local scrapers.
-* **🧠 AI Hybrid Matching:** Combines `sentence-transformers` (Semantic Search) with hard keyword matching for high accuracy.
-* **🛡️ Smart Filters:**
-    * **Anti-Senior:** Automatically removes Lead, Senior, and Manager roles.
-    * **Fake Junior Detector:** Scans descriptions for "3+ years experience" requirements and flags/removes them.
-* **📊 Actionable Analytics:**
-    * **Traffic Light System:** 🟢 Apply Now / 🟡 Learning Gap / 🔴 Low Chance.
-    * **Skill-Gap Analysis:** Identifies exactly which skills you need to learn.
-    * **Market Insights:** Visualizes top requested skills in the current job pool.
+## Solution
 
-## 🛠 Tech Stack
-* **Language:** Python 3.10+
-* **Frontend:** Streamlit
-* **ML & NLP:** PyTorch, Sentence-Transformers (`all-MiniLM-L6-v2`), Scikit-learn
-* **Data Processing:** Pandas, NumPy
-* **Visualization:** Plotly
-* **Data Ingestion:** Requests, BeautifulSoup4
+A hybrid-search scoring system that evaluates job compatibility using semantic embeddings and explicit keyword requirements. The app serves as a transparent filter on top of the job market.
 
-## 🚀 How to Run Locally
+## Features
 
-### 1. Clone the repository
+**Live Aggregation**  
+Pulls real job postings (Prague/Remote) via JSearch API or local scrapers.
+
+**Hybrid AI Matching**  
+Combines sentence-transformer embeddings with keyword matching for stable, interpretable results.
+
+**Filtering Logic**  
+- Removes senior/lead/manager roles by pattern detection.  
+- Flags “fake junior” postings that demand multi-year experience.
+
+**Scoring & Insights**  
+- Traffic-light score: strong fit / partial fit / low fit.  
+- Skill-gap extraction: highlights missing competencies.  
+- Market insights: skill frequency, trends, and distributions.
+
+## Tech Stack
+
+- Python 3.10+  
+- Streamlit  
+- PyTorch, Sentence-Transformers, scikit-learn  
+- Pandas, NumPy  
+- Plotly  
+- Requests, BeautifulSoup4
+
+## Running Locally
+
+Clone the repository:
+
 ```bash
-git clone [https://github.com/YOUR_USERNAME/internship-scorer.git](https://github.com/YOUR_USERNAME/internship-scorer.git)
+git clone https://github.com/YOUR_USERNAME/internship-scorer.git
 cd internship-scorer
 ````
 
-### 2\. Create a virtual environment & install dependencies
+Create a virtual environment and install dependencies:
 
 ```bash
-# Windows
 python -m venv venv
-venv\Scripts\activate
+source venv/bin/activate      # Mac/Linux
+venv\Scripts\activate         # Windows
 
-# Mac/Linux
-python3 -m venv venv
-source venv/bin/activate
-```
-
-```bash
 pip install -r requirements.txt
 ```
 
-### 3\. Get Data (Optional)
-
-The app comes with a fallback dataset, but you can generate fresh mock data or fetch live data:
+Optional: generate data or fetch fresh listings:
 
 ```bash
-# Generate fresh mock data (Prague context)
-python ingest_fake.py
+python ingest_fake.py         # mock Prague dataset
+# or
+python ingest.py              # requires RapidAPI key
 ```
 
-*(Or use `ingest.py` if you have a RapidAPI key)*
-
-### 4\. Run the App
+Start the app:
 
 ```bash
 streamlit run app.py
 ```
 
-## 📂 Project Structure
+## Project Structure
 
-  * `app.py`: Main Streamlit interface and visualization logic.
-  * `core.py`: The "Brain". Contains ML model, PDF parsing, scoring logic, and filters.
-  * `ingest_fake.py`: Generates realistic mock data for testing/demo purposes.
-  * `ingest.py`: Script for fetching real data via JSearch API.
-  * `live_jobs.csv`: The current database of jobs.
+* `app.py` — Streamlit UI and visualizations
+* `core.py` — ML models, scoring logic, filtering pipeline
+* `ingest_fake.py` — mock job generator
+* `ingest.py` — live data ingestion
+* `live_jobs.csv` — current job dataset
 
------
+---
 
-*Created by Mykyta Bulatnikov*
+Created by Mykyta Bulatnikov
+
+```
+
+---
+
