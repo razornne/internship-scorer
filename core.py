@@ -5,8 +5,7 @@ from pypdf import PdfReader
 import re
 import os
 
-# === БОЛЬШОЙ СПИСОК НАВЫКОВ ===
-# Важно: пишем в нижнем регистре
+# === EXTENDED SKILL LIST ===
 TECH_KEYWORDS = [
     # Languages
     "python", "java", "c++", "c#", ".net", "javascript", "typescript", "html", "css", "sql", "nosql", "r", "bash", "go", "golang", "scala", "kotlin", "php", "ruby", "rust", "swift",
@@ -38,35 +37,31 @@ class ScorerEngine:
             for page in reader.pages:
                 t = page.extract_text()
                 if t: text += t + "\n"
-            # Небольшая чистка от лишних переносов строк
+            # Cleaning common artifacts
             text = text.replace('  ', ' ').replace('\n', ' ')
             return text
         except Exception as e:
-            return f"Error: {e}"
+            return f"Error reading PDF: {e}"
 
     def extract_skills(self, text):
         """
-        Улучшенный поиск навыков.
-        Ищет точные совпадения слов, чтобы избежать нахождения 'go' внутри 'google'.
+        Smart skill extraction using word boundaries.
         """
         if not text: return []
         
-        text_lower = " " + text.lower() + " " # Добавляем пробелы по краям для поиска
+        text_lower = " " + text.lower() + " "
         found = []
         
-        # Заменяем спецсимволы, которые мешают поиску, на пробелы (кроме + и # для C++/C#)
-        # Это помогает, если в резюме написано "Python,Java" без пробела
+        # Replace special chars (except + and # for C++/C#) with spaces
         clean_text = re.sub(r'[^a-z0-9+#]', ' ', text_lower)
         
         for skill in TECH_KEYWORDS:
-            # Для C++ и C# ищем как есть
             if skill in ['c++', 'c#', '.net']:
-                if f" {skill} " in clean_text: # Ищем с пробелами вокруг
+                # For special languages, look for spaces around
+                if f" {skill} " in clean_text:
                     found.append(skill)
             else:
-                # Для остальных слов используем строгие границы слов
-                # Это найдет "java", но не найдет его в слове "javascript" (что правильно, т.к. js это отдельный скилл)
-                # Или найдет "go", но не в "algorithm"
+                # Use regex word boundaries \b for standard words
                 pattern = r'\b' + re.escape(skill) + r'\b'
                 if re.search(pattern, clean_text):
                     found.append(skill)
@@ -74,14 +69,14 @@ class ScorerEngine:
         return list(set(found))
 
     def calculate_hybrid_score(self, cv_text, job_descriptions, cv_skills):
-        # 1. AI Score
+        # 1. AI Semantic Score
         cv_emb = self.model.encode(cv_text, convert_to_tensor=True)
         job_embs = self.model.encode(job_descriptions, convert_to_tensor=True)
         semantic_scores = util.cos_sim(cv_emb, job_embs)[0].tolist()
         
         final_scores = []
         for i, desc in enumerate(job_descriptions):
-            # 2. Keyword Score
+            # 2. Keyword Match Score
             job_skills = self.extract_skills(desc)
             if not job_skills:
                 keyword_match = semantic_scores[i]
@@ -89,7 +84,7 @@ class ScorerEngine:
                 common = set(cv_skills).intersection(set(job_skills))
                 keyword_match = len(common) / len(job_skills)
             
-            # Взвешиваем: 60% смысл, 40% ключевики
+            # Weighted Average: 60% Semantic, 40% Keywords
             hybrid = (semantic_scores[i] * 0.6) + (keyword_match * 0.4)
             final_scores.append(round(hybrid * 100, 1))
         return final_scores
@@ -100,8 +95,9 @@ class ScorerEngine:
         missing = list(job_skills - user_skills)
         return missing
 
-# === ФИЛЬТРЫ ===
+# === FILTERS ===
 def filter_fake_junior(df):
+    # Regex to find "3+ years", "5 years", etc.
     high_exp_pattern = r'([3-9]|\d{2,})\+?\s*-?\s*years?'
     def is_fake(row):
         desc = str(row['description']).lower()
@@ -112,21 +108,26 @@ def filter_fake_junior(df):
 
 def load_real_db():
     df = pd.DataFrame()
+    source_type = "unknown"
     
     # 1. Live Data
     if os.path.exists("live_jobs.csv"):
         try:
+            print("🚀 Loading LIVE data...")
             df = pd.read_csv("live_jobs.csv")
+            source_type = "live"
         except: pass
 
     # 2. Archive Data (Fallback)
     if df.empty and os.path.exists("Uncleaned_DS_jobs.csv"):
         try:
+            print("⚠️ Loading ARCHIVE data...")
             df = pd.read_csv("Uncleaned_DS_jobs.csv")
             df = df.rename(columns={"Job Description": "description", "Job Title": "title", "Company Name": "company"})
             df['company'] = df['company'].apply(lambda x: x.split('\n')[0] if isinstance(x, str) else "Unknown")
             df['url'] = "#"
             df['Location'] = "Unknown"
+            source_type = "archive"
         except: pass
 
     if df.empty: return pd.DataFrame()
@@ -139,6 +140,8 @@ def load_real_db():
     df = df[~df['title'].str.lower().str.contains(pattern, case=False)]
     
     # Smart Filter
-    df, _ = filter_fake_junior(df)
+    df, deleted = filter_fake_junior(df)
+    
+    print(f"✅ Source: {source_type.upper()}. Loaded: {len(df)} jobs (Filtered {deleted} fake juniors).")
     
     return df
