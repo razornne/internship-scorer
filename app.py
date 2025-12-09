@@ -64,7 +64,7 @@ st.markdown("""
 
     /* КАРТОЧКА ВАКАНСИИ */
     .job-card {
-        padding: 24px; /* Чуть больше воздуха */
+        padding: 24px;
         border-radius: 12px;
         margin-bottom: 20px;
         border: 1px solid transparent;
@@ -78,7 +78,7 @@ st.markdown("""
         .job-card { background-color: #262730; border-color: #3f3f46; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
     }
 
-    /* --- НОВЫЕ СТИЛИ ДЛЯ БОЛЬШОГО СКОРА --- */
+    /* --- СТИЛИ ДЛЯ БОЛЬШОГО СКОРА --- */
     .big-score {
         font-size: 2.5rem;
         font-weight: 800;
@@ -140,23 +140,24 @@ with st.sidebar:
         selected_loc = st.selectbox("📍 City", locations)
         only_remote = st.checkbox("🏠 Remote Only")
     st.markdown("---")
-    st.caption("v2.4 • Big Score UI")
+    st.caption("v2.5 • Big Score UI")
 
 # === 5. FUNCTIONS ===
 def generate_cover_letter_gemini(api_key, cv_text, job_description, company_name, job_title):
     if not api_key: return "⚠️ API Key missing."
     genai.configure(api_key=api_key)
-    models = ['models/gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-pro']
+    # Используем модели из твоего списка
+    models = ['models/gemini-2.0-flash', 'models/gemini-2.0-flash-exp', 'gemini-1.5-flash', 'gemini-pro']
     for model_name in models:
         try:
-            time.sleep(0.3)
+            time.sleep(0.5)
             model = genai.GenerativeModel(model_name)
             with st.spinner(f"✨ Generating with {model_name}..."):
                 prompt = f"Write a 150-word cover letter. RESUME: {cv_text[:1000]}. JOB: {job_title} at {company_name}. DESC: {job_description[:1000]}. No placeholders."
                 response = model.generate_content(prompt)
                 if response.text: return response.text
         except: continue
-    return "❌ AI is taking a nap. Try again."
+    return "❌ AI is taking a nap. Try again later."
 
 # === 6. MAIN UI ===
 st.markdown('<h1 class="title-text">AI Internship Scorer 🚀</h1>', unsafe_allow_html=True)
@@ -208,7 +209,7 @@ if cv_text:
                 score = row['Score']
                 missing = engine.analyze_gaps(user_skills, row['description'])
                 
-                # ЛОГИКА ЦВЕТОВ И ТЕКСТА
+                # Colors
                 if score >= 70: 
                     score_color = "#10B981" # Green
                     status_text = "HIGH MATCH"
@@ -219,9 +220,9 @@ if cv_text:
                     score_color = "#94A3B8" # Grey
                     status_text = "LOW MATCH"
 
-                # HTML CARD (Flexbox Layout)
-                # ВНИМАНИЕ: В СТРОКЕ НИЖЕ ОБЯЗАТЕЛЬНО ДОЛЖНО БЫТЬ unsafe_allow_html=True
-                st.markdown(f"""
+                # HTML CARD
+                # ВАЖНО: Весь HTML собран в одну переменную для надежности
+                card_html = f"""
                 <div class="job-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         
@@ -238,17 +239,20 @@ if cv_text:
                         </div>
 
                     </div>
-                """, unsafe_allow_html=True) 
+                """
                 
-                # Missing Skills Block (ТУТ ТОЖЕ НУЖЕН ФЛАГ)
+                # Missing Skills Block
                 if missing:
                     missing_html = "".join([f'<span class="skill-tag missing-tag">{s}</span>' for s in missing[:5]])
                     if len(missing) > 5: missing_html += f'<span class="skill-tag missing-tag">+{len(missing)-5}</span>'
-                    st.markdown(f"<div style='margin-top:16px; font-size:0.9rem;'><b>Missing Skills:</b> {missing_html}</div>", unsafe_allow_html=True)
+                    card_html += f"<div style='margin-top:16px; font-size:0.9rem;'><b>Missing Skills:</b> {missing_html}</div>"
                 else:
-                    st.markdown(f"<div style='margin-top:16px; color:{score_color}; font-weight:600;'>✨ Perfect Technical Match!</div>", unsafe_allow_html=True)
+                    card_html += f"<div style='margin-top:16px; color:{score_color}; font-weight:600;'>✨ Perfect Technical Match!</div>"
 
-                st.markdown("</div>", unsafe_allow_html=True) # End card
+                card_html += "</div>" # Close card
+
+                # RENDER HTML
+                st.markdown(card_html, unsafe_allow_html=True)
 
                 # BUTTONS ROW
                 c1, c2, c3 = st.columns([1, 1, 2])
