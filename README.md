@@ -3,7 +3,7 @@
 **An intelligent career assistant for students and juniors in IT.**
 It aggregates real-time jobs, filters out "fake" entry-level roles, and calculates your hiring chances using Machine Learning.
 
-🔗 **Live Demo:** [Open App](https://internship-scorer-qz938xauxqfprc9b3cuq6b.streamlit.app/)
+🔗 **Live Demo:** [Open App](https://internship-scorer.streamlit.app/)
 
 ---
 
