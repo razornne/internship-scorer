@@ -220,6 +220,7 @@ if cv_text:
                     status_text = "LOW MATCH"
 
                 # HTML CARD (Flexbox Layout)
+                # ВНИМАНИЕ: В СТРОКЕ НИЖЕ ОБЯЗАТЕЛЬНО ДОЛЖНО БЫТЬ unsafe_allow_html=True
                 st.markdown(f"""
                 <div class="job-card">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -237,9 +238,9 @@ if cv_text:
                         </div>
 
                     </div>
-                """, unsafe_allow_html=True)
+                """, unsafe_allow_html=True) 
                 
-                # Missing Skills Block
+                # Missing Skills Block (ТУТ ТОЖЕ НУЖЕН ФЛАГ)
                 if missing:
                     missing_html = "".join([f'<span class="skill-tag missing-tag">{s}</span>' for s in missing[:5]])
                     if len(missing) > 5: missing_html += f'<span class="skill-tag missing-tag">+{len(missing)-5}</span>'
