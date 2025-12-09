@@ -38,4 +38,4 @@ This app acts as a smart filter between you and the job market. It uses **Hybrid
 * **Data Ingestion:** Requests, BeautifulSoup4
 
 ---
-*Created by Nikita*
+*Created by Mykyta Bulatnikov*
