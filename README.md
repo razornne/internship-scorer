@@ -2,7 +2,7 @@
 
 A practical career tool for students and junior engineers.
 
-**Live Demo:** [Open App](https://internship-scorer-qz938xauxqfprc9b3cuq6b.streamlit.app/)
+**Live Demo:** [Open App](https://internship-scorer.streamlit.app/)
 
 
 ## Problem
