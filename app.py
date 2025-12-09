@@ -16,16 +16,15 @@ st.set_page_config(
 # CUSTOM CSS
 st.markdown("""
 <style>
-    /* Шрифты */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     
     html, body, [class*="css"]  {
         font-family: 'Inter', sans-serif;
     }
 
-    /* --- 1. Заголовок (Вернули Ракету + Синий Градиент) --- */
+    /* ЗАГОЛОВОК */
     .title-text {
-        background: linear-gradient(90deg, #2563EB, #9333EA); /* Синий -> Фиолетовый */
+        background: linear-gradient(90deg, #2563EB, #9333EA);
         background-size: 200% 200%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -34,128 +33,90 @@ st.markdown("""
         font-size: 3rem !important;
         padding-bottom: 10px;
     }
-    
     @keyframes gradient {
         0% {background-position: 0% 50%;}
         50% {background-position: 100% 50%;}
         100% {background-position: 0% 50%;}
     }
 
-    /* --- 2. Квадратные Навыки (Square Tags) --- */
+    /* КВАДРАТНЫЕ ТЕГИ */
     .skill-tag {
         display: inline-flex;
         align-items: center;
-        padding: 4px 8px;          /* Чуть меньше отступы */
-        border-radius: 6px;        /* КВАДРАТНЫЕ УГЛЫ (было 20px) */
+        padding: 4px 8px;
+        border-radius: 6px;
         font-size: 0.85rem;
         font-weight: 500;
         margin: 2px;
         border: 1px solid transparent;
-        font-family: 'Consolas', 'Monaco', monospace; /* Моноширинный шрифт для "кодерского" вида */
-    }
-
-    /* Цвета для светлой темы */
-    .skill-tag {
-        background-color: #F1F5F9;
-        color: #334155;
-        border-color: #E2E8F0;
-    }
-    
-    .missing-tag {
-        background-color: #FEF2F2 !important;
-        color: #DC2626 !important;
-        border-color: #FECACA !important;
-    }
-
-    /* Цвета для темной темы */
-    @media (prefers-color-scheme: dark) {
-        .skill-tag {
-            background-color: #1E293B;
-            color: #E2E8F0;
-            border-color: #334155;
-        }
-        .missing-tag {
-            background-color: #450a0a !important;
-            color: #fca5a5 !important;
-            border-color: #7f1d1d !important;
-        }
-    }
-
-    /* --- 3. Синяя Кнопка (Override Primary Button) --- */
-    div.stButton > button:first-child {
-        background: linear-gradient(90deg, #2563EB, #1D4ED8);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-    div.stButton > button:first-child:hover {
-        background: linear-gradient(90deg, #1D4ED8, #1E40AF);
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        transform: translateY(-1px);
-    }
-    div.stButton > button:first-child:active {
-        color: white; /* Фикс цвета текста при нажатии */
-    }
-
-    /* --- 4. Карточка Вакансии --- */
-    .job-card {
-        padding: 20px;
-        border-radius: 12px;
-        margin-bottom: 15px;
-        border: 1px solid transparent;
-        transition: transform 0.2s;
-    }
-    .job-card:hover {
-        transform: translateY(-2px);
+        font-family: 'Consolas', 'Monaco', monospace;
     }
 
     /* Светлая тема */
-    .job-card {
-        background-color: #ffffff;
-        border-color: #e2e8f0;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-    
+    .skill-tag { background-color: #F1F5F9; color: #334155; border-color: #E2E8F0; }
+    .missing-tag { background-color: #FEF2F2 !important; color: #DC2626 !important; border-color: #FECACA !important; }
+
     /* Темная тема */
     @media (prefers-color-scheme: dark) {
-        .job-card {
-            background-color: #262730;
-            border-color: #3f3f46;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
+        .skill-tag { background-color: #1E293B; color: #E2E8F0; border-color: #334155; }
+        .missing-tag { background-color: #450a0a !important; color: #fca5a5 !important; border-color: #7f1d1d !important; }
     }
 
-    /* Кружок со скором */
-    .score-circle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 50px;
-        height: 50px;
-        border-radius: 8px; /* Тоже квадратный, чтобы сочеталось */
+    /* КАРТОЧКА ВАКАНСИИ */
+    .job-card {
+        padding: 24px; /* Чуть больше воздуха */
+        border-radius: 12px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        transition: transform 0.2s;
+    }
+    .job-card:hover { transform: translateY(-3px); }
+
+    /* Темизация карточки */
+    .job-card { background-color: #ffffff; border-color: #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    @media (prefers-color-scheme: dark) {
+        .job-card { background-color: #262730; border-color: #3f3f46; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+    }
+
+    /* --- НОВЫЕ СТИЛИ ДЛЯ БОЛЬШОГО СКОРА --- */
+    .big-score {
+        font-size: 2.5rem;
+        font-weight: 800;
+        line-height: 1;
+        text-align: right;
+    }
+    .status-label {
+        font-size: 0.85rem;
         font-weight: 700;
-        font-size: 1.1rem;
-        color: white;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        text-align: right;
+        margin-top: 4px;
+    }
+
+    /* КНОПКА */
+    div.stButton > button:first-child {
+        background: linear-gradient(90deg, #2563EB, #1D4ED8);
+        color: white; border: none; border-radius: 8px; font-weight: 600;
+    }
+    div.stButton > button:first-child:hover {
+        background: linear-gradient(90deg, #1D4ED8, #1E40AF);
+        transform: translateY(-1px);
     }
 </style>
 """, unsafe_allow_html=True)
 
 # === 2. INITIALIZATION ===
 @st.cache_resource
-def get_engine():
-    return ScorerEngine()
+def get_engine(): return ScorerEngine()
 
 @st.cache_data(ttl=3600)
-def get_jobs():
-    return load_real_db()
+def get_jobs(): return load_real_db()
 
 engine = get_engine()
 df_jobs = get_jobs()
 
-if 'calculated' not in st.session_state:
-    st.session_state.calculated = False
+if 'calculated' not in st.session_state: st.session_state.calculated = False
 
 # === 3. AUTH ===
 if "GEMINI_API_KEY" in st.secrets:
@@ -169,28 +130,23 @@ else:
 with st.sidebar:
     st.title("👨‍💻 Profile")
     st.caption(auth_status)
-    
     uploaded_file = st.file_uploader("📄 Upload CV (PDF)", type="pdf")
     manual_text = st.text_area("Or paste text:", height=100)
-    
     st.divider()
     st.subheader("🎯 Filters")
-    
     if not df_jobs.empty:
         unique_locs = sorted(df_jobs['Location'].astype(str).unique().tolist())
         locations = ["All Locations"] + unique_locs
         selected_loc = st.selectbox("📍 City", locations)
         only_remote = st.checkbox("🏠 Remote Only")
-    
     st.markdown("---")
-    st.caption("v2.3 • Square Tech Design")
+    st.caption("v2.4 • Big Score UI")
 
 # === 5. FUNCTIONS ===
 def generate_cover_letter_gemini(api_key, cv_text, job_description, company_name, job_title):
     if not api_key: return "⚠️ API Key missing."
     genai.configure(api_key=api_key)
     models = ['models/gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-pro']
-    
     for model_name in models:
         try:
             time.sleep(0.3)
@@ -203,7 +159,6 @@ def generate_cover_letter_gemini(api_key, cv_text, job_description, company_name
     return "❌ AI is taking a nap. Try again."
 
 # === 6. MAIN UI ===
-# Вернули смайлик ракеты в название
 st.markdown('<h1 class="title-text">AI Internship Scorer 🚀</h1>', unsafe_allow_html=True)
 st.markdown("### Find your perfect match.")
 
@@ -211,7 +166,7 @@ if df_jobs.empty:
     st.warning("⚠️ Database empty. Please run `python ingest_ai.py`.")
     st.stop()
 
-# CV Logic
+# CV Processing
 cv_text = ""
 if uploaded_file:
     cv_text = engine.extract_text_from_pdf(uploaded_file)
@@ -221,20 +176,17 @@ elif manual_text:
 if cv_text:
     user_skills = engine.extract_skills(cv_text)
     
-    # КВАДРАТНЫЕ ТЕГИ
     st.markdown("#### Your Stack:")
     skills_html = "".join([f'<span class="skill-tag">{s}</span>' for s in user_skills])
     st.markdown(skills_html, unsafe_allow_html=True)
     
     st.write("")
-    # Кнопка теперь СИНЯЯ (благодаря CSS выше)
     if st.button("🔥 Analyze Market", type="primary", use_container_width=True):
         st.session_state.calculated = True
 
     st.markdown("---")
 
     if st.session_state.calculated:
-        # Filtering
         filtered_df = df_jobs.copy()
         if selected_loc != "All Locations":
             filtered_df = filtered_df[filtered_df['Location'] == selected_loc]
@@ -256,40 +208,48 @@ if cv_text:
                 score = row['Score']
                 missing = engine.analyze_gaps(user_skills, row['description'])
                 
-                # Colors
+                # ЛОГИКА ЦВЕТОВ И ТЕКСТА
                 if score >= 70: 
-                    bg_color = "#10B981" # Green
+                    score_color = "#10B981" # Green
+                    status_text = "HIGH MATCH"
                 elif score >= 50: 
-                    bg_color = "#3B82F6" # Blue
+                    score_color = "#3B82F6" # Blue
+                    status_text = "MEDIUM MATCH"
                 else: 
-                    bg_color = "#64748B" # Grey
+                    score_color = "#94A3B8" # Grey
+                    status_text = "LOW MATCH"
 
-                # HTML CARD
+                # HTML CARD (Flexbox Layout)
                 st.markdown(f"""
                 <div class="job-card">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                        <div>
-                            <h3 style="margin:0; color:inherit;">{row['title']}</h3>
-                            <p style="margin:4px 0 0 0; opacity:0.8; font-size:0.9rem;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        
+                        <div style="flex: 1; padding-right: 20px;">
+                            <h3 style="margin:0; font-size: 1.4rem; color:inherit;">{row['title']}</h3>
+                            <p style="margin:6px 0 0 0; opacity:0.8; font-size:1rem;">
                                 🏢 <b>{row['company']}</b> &nbsp;•&nbsp; 📍 {row['Location']}
                             </p>
                         </div>
-                        <div class="score-circle" style="background-color: {bg_color}; min-width:50px;">
-                            {int(score)}%
+
+                        <div style="text-align:right; min-width: 120px;">
+                            <div class="big-score" style="color: {score_color};">{int(score)}%</div>
+                            <div class="status-label" style="color: {score_color};">{status_text}</div>
                         </div>
+
                     </div>
                 """, unsafe_allow_html=True)
                 
-                # Missing Skills
+                # Missing Skills Block
                 if missing:
                     missing_html = "".join([f'<span class="skill-tag missing-tag">{s}</span>' for s in missing[:5]])
-                    st.markdown(f"<div style='margin-top:12px; font-size:0.9rem;'><b>Missing:</b> {missing_html}</div>", unsafe_allow_html=True)
+                    if len(missing) > 5: missing_html += f'<span class="skill-tag missing-tag">+{len(missing)-5}</span>'
+                    st.markdown(f"<div style='margin-top:16px; font-size:0.9rem;'><b>Missing Skills:</b> {missing_html}</div>", unsafe_allow_html=True)
                 else:
-                    st.markdown("<div style='margin-top:12px; color:#10B981; font-weight:600;'>✨ Perfect Match</div>", unsafe_allow_html=True)
+                    st.markdown(f"<div style='margin-top:16px; color:{score_color}; font-weight:600;'>✨ Perfect Technical Match!</div>", unsafe_allow_html=True)
 
                 st.markdown("</div>", unsafe_allow_html=True) # End card
 
-                # BUTTONS
+                # BUTTONS ROW
                 c1, c2, c3 = st.columns([1, 1, 2])
                 with c1:
                     if row['url'] and row['url'] != "#":
