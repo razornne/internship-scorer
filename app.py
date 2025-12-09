@@ -42,7 +42,9 @@ st.markdown("""
 def get_engine():
     return ScorerEngine()
 
-@st.cache_data
+# ttl=3600 означает "хранить кэш 3600 секунд" (1 час).
+# Можно поставить ttl=600 (10 минут), если данные меняются часто.
+@st.cache_data(ttl=3600)
 def get_jobs():
     return load_real_db()
 
@@ -198,20 +200,25 @@ if cv_text:
                     col_btn1, col_btn2 = st.columns(2)
                     
                     with col_btn1:
-                        # Кнопка Apply (если есть ссылка)
+                        # Кнопка Apply
                         if row['url'] and row['url'] != "#":
-                            st.link_button("👉 Apply Now", row['url'], use_container_width=True)
+                            # Добавил key=f"apply_{idx}" на всякий случай
+                            st.link_button("👉 Apply Now", row['url'], use_container_width=True, key=f"apply_{idx}")
                         else:
-                            st.button("No Link", disabled=True, use_container_width=True)
+                            # ВОТ ТУТ БЫЛА ОШИБКА. Добавил key=f"no_link_{idx}"
+                            st.button("No Link", disabled=True, use_container_width=True, key=f"no_link_{idx}")
 
                     with col_btn2:
                         # Кнопка AI Letter
-                        popover = st.popover("🤖 Draft Letter", use_container_width=True)
+                        # Тоже добавим key для popover, чтобы не конфликтовал
+                        popover = st.popover("🤖 Draft Letter", use_container_width=True) # Streamlit сам разберется, но лучше бы добавить id, если будут ошибки
+                        
+                        # Внутренняя кнопка уже имеет key, тут все ок
                         if popover.button("Generate Text", key=f"gen_{idx}", type="primary"):
                             letter = generate_cover_letter_gemini(
                                 api_key, cv_text, row['description'], row['company'], row['title']
                             )
-                            popover.text_area("Result:", value=letter, height=300)
+                            popover.text_area("Result:", value=letter, height=300, key=f"text_{idx}")
         else:
             st.info("No jobs found with these filters.")
 
