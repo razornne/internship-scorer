@@ -1,106 +1,41 @@
 title,company,description,Location,url,source
-Junior Python Developer,TechSolutions CZ,"We are seeking a passionate Junior Python Developer to join our dynamic team. You will be involved in developing and maintaining web applications, working closely with senior developers to implement new features and resolve technical challenges. The ideal candidate possesses a strong understanding of Python fundamentals and a desire to learn and grow in a fast-paced environment.
-
-**Requirements:** Strong Python skills, basic understanding of web frameworks (Django/Flask), knowledge of databases (PostgreSQL/MySQL). 
-
-**Tech Stack:** Python, Django, PostgreSQL, REST APIs, Git. 
-
-**Benefits:** Competitive salary, flexible working hours, professional development opportunities, team building events.",Prague,#,Gemini Synthetic
-Data Analyst Intern,Analytics Insight,"We offer an exciting internship opportunity for a Data Analyst Intern to contribute to our data-driven decision-making process. You will assist in collecting, cleaning, and analyzing data to identify trends and insights. Your work will directly impact our strategic planning. This is a great opportunity to learn from experienced analysts and gain hands-on experience in the field.
-
-**Requirements:** Strong analytical skills, proficiency in Excel, basic knowledge of statistical software (R/Python). 
-
-**Tech Stack:** Excel, R (optional), Python (Pandas, NumPy), SQL. 
-
-**Benefits:** Stipend, mentorship from senior analysts, opportunity to work on real-world projects, potential for full-time employment.",Remote,#,Gemini Synthetic
-Junior Python Developer,CodeCrafters Ltd.,"Join our team as a Junior Python Developer and contribute to building innovative software solutions. You'll be responsible for writing clean, efficient code, participating in code reviews, and collaborating with other developers to deliver high-quality products. We value teamwork and a passion for learning new technologies.
-
-**Requirements:** Solid understanding of Python principles, experience with testing frameworks, familiarity with version control systems. 
-
-**Tech Stack:** Python, Flask, pytest, Git, Docker. 
-
-**Benefits:** Health insurance, paid time off, training budget, company-sponsored events.",Brno,#,Gemini Synthetic
-Frontend React Developer (Junior),Web Wizards,"We're looking for a Junior Frontend React Developer to help us build engaging and user-friendly web applications. You will work on translating designs and wireframes into high-quality code, participating in code reviews, and contributing to the development of new features. A strong understanding of React fundamentals is essential.
-
-**Requirements:** Proficiency in JavaScript, experience with React.js, knowledge of HTML and CSS. 
-
-**Tech Stack:** React, JavaScript, HTML, CSS, Redux, Git. 
-
-**Benefits:** Competitive salary, flexible working hours, training opportunities, supportive team environment.",Prague,#,Gemini Synthetic
-Java/Spring Developer (Junior),Enterprise Solutions,"Join our team as a Junior Java/Spring Developer and contribute to the development of enterprise-level applications. You'll be responsible for writing well-tested, maintainable code, participating in code reviews, and working closely with senior developers to deliver high-quality solutions. A strong understanding of Java principles is essential.
-
-**Requirements:** Solid understanding of Java, experience with Spring Framework, knowledge of relational databases. 
-
-**Tech Stack:** Java, Spring Boot, MySQL, REST APIs, Git. 
-
-**Benefits:** Comprehensive benefits package, paid time off, professional development opportunities, collaborative work environment.",Remote,#,Gemini Synthetic
-DevOps/Cloud Engineer (Trainee),Cloud Innovators,"We are looking for a DevOps/Cloud Engineer Trainee to join our growing team. You will assist in automating infrastructure, deploying applications, and monitoring system performance. This is a great opportunity to learn about cloud technologies and DevOps practices from experienced engineers.
-
-**Requirements:** Basic understanding of Linux, networking concepts, and scripting languages. 
-
-**Tech Stack:** AWS, Docker, Kubernetes, Terraform, Ansible, Python. 
-
-**Benefits:** Mentorship from senior engineers, hands-on experience with cloud technologies, opportunity to learn DevOps best practices, potential for full-time employment.",Brno,#,Gemini Synthetic
-Data Scientist Intern,Data Driven Decisions,"We are seeking a motivated Data Scientist Intern to contribute to our data science projects. You will assist in building machine learning models, performing statistical analysis, and visualizing data to extract insights. This is a great opportunity to gain practical experience in data science and work on real-world problems.
-
-**Requirements:** Strong mathematical skills, proficiency in Python, knowledge of machine learning algorithms. 
-
-**Tech Stack:** Python (Scikit-learn, TensorFlow, Pandas), SQL, Data visualization tools (Tableau, Matplotlib). 
-
-**Benefits:** Stipend, mentorship from experienced data scientists, opportunity to work on challenging projects, potential for full-time employment.",Prague,#,Gemini Synthetic
-QA Tester (Manual/Automation),Quality Assurance Experts,"We are seeking a QA Tester to ensure the quality of our software products. You will be responsible for creating test plans, executing test cases, and reporting defects. Both manual and automation testing skills are valued. This is an excellent opportunity to contribute to a growing team and learn about software quality assurance.
-
-**Requirements:** Strong attention to detail, excellent communication skills, basic understanding of software testing principles. 
-
-**Tech Stack:** Jira, TestRail, Selenium (optional), Postman (optional). 
-
-**Benefits:** Competitive salary, flexible working hours, training opportunities, supportive team environment.",Remote,#,Gemini Synthetic
-Junior Python Developer,Quantum Innovations,"We are seeking a highly skilled Junior Python Developer with 3+ years of experience in developing and deploying complex machine learning models. The ideal candidate will be proficient in building distributed systems, optimizing performance, and leading a team of junior developers. Deep learning experience is a must.
-
-**Requirements:** 3+ years of Python development experience, expert knowledge of machine learning algorithms, experience with cloud platforms (AWS, Azure, GCP), strong leadership skills. Masters Degree in CompSci or related field.
-
-**Tech Stack:** Python, TensorFlow, PyTorch, AWS, Docker, Kubernetes. 
-
-**Benefits:** Competitive salary, stock options, unlimited vacation.",Prague,#,Gemini Synthetic
-Data Analyst Intern,Global Data Solutions,"Looking for an enthusiastic Data Analyst Intern to join our team! You will be responsible for independently conducting data analysis projects, presenting findings to senior management, and developing advanced statistical models. We require someone with a PhD in statistics or a related field and 5+ years of industry experience. Must have experience leading multiple project teams and mentoring junior colleagues.
-
-**Requirements:** PhD in Statistics or related field, 5+ years of industry experience, Expert level knowledge of statistical modelling, exceptional communication skills.
-
-**Tech Stack:** R, Python, SQL, Tableau, PowerBI
-
-**Benefits:** Competitive salary, relocation assistance, career advancement opportunities.",Brno,#,Gemini Synthetic
-Frontend React Developer (Junior),Digital Dynamics,"We are seeking a Junior Frontend React Developer to contribute to the development of our web applications. You will be responsible for implementing new features, fixing bugs, and writing unit tests. We value collaboration and a passion for learning new technologies.
-
-**Requirements:** Proficiency in JavaScript, experience with React.js, knowledge of HTML and CSS. 
-
-**Tech Stack:** React, JavaScript, HTML, CSS, Redux, Git. 
-
-**Benefits:** Competitive salary, flexible working hours, training opportunities, supportive team environment.",Prague,#,Gemini Synthetic
-Java/Spring Developer (Junior),Tech Innovations,"Join our team as a Junior Java/Spring Developer and contribute to the development of our enterprise applications. You'll be responsible for writing clean, efficient code, participating in code reviews, and collaborating with other developers to deliver high-quality solutions. 
-
-**Requirements:** Solid understanding of Java, experience with Spring Framework, knowledge of relational databases. 
-
-**Tech Stack:** Java, Spring Boot, MySQL, REST APIs, Git. 
-
-**Benefits:** Comprehensive benefits package, paid time off, professional development opportunities, collaborative work environment.",Brno,#,Gemini Synthetic
-DevOps/Cloud Engineer (Trainee),Cloudify Solutions,"We are looking for a DevOps/Cloud Engineer Trainee to assist in automating our infrastructure and deploying applications to the cloud. You will gain hands-on experience with various cloud technologies and DevOps practices.
-
-**Requirements:** Basic understanding of Linux, networking concepts, and scripting languages. 
-
-**Tech Stack:** AWS, Docker, Kubernetes, Terraform, Ansible, Python. 
-
-**Benefits:** Mentorship from senior engineers, hands-on experience with cloud technologies, opportunity to learn DevOps best practices, potential for full-time employment.",Remote,#,Gemini Synthetic
-Junior Python Developer,Data Analytics Group,"We are looking for a Junior Python Developer to join our development team. You will be working on backend applications, developing APIs and working with databases. We are looking for a candidate who has experience with Python and willingness to learn other technologies.
-
-**Requirements:** Strong Python skills, knowledge of APIs, experience with databases like Postgres or MySQL. 
-
-**Tech Stack:** Python, Django/Flask, Postgres, Git. 
-
-**Benefits:** Competitive salary, flexible working hours, professional development opportunities, team building events.",Prague,#,Gemini Synthetic
-Data Analyst Intern,Research Analytics,"We are looking for a Data Analyst Intern to join our data team and assist in cleaning data, analysing data and visualizing it in order to help our clients make better decisions. You will have a chance to learn from senior analysts and contribute to our data projects.
-
-**Requirements:** Strong communication skills, proficiency in Excel, basic knowledge of statistical software (R/Python).
-
-**Tech Stack:** Excel, R, Python(Pandas, Numpy), SQL. 
-
-**Benefits:** Stipend, mentorship from senior analysts, opportunity to work on real-world projects, potential for full-time employment.",Remote,#,Gemini Synthetic
+Junior Python Developer,Acme Solutions,We're looking for a passionate Junior Python Developer to join our growing team in Prague. You will be working on backend systems and APIs. Experience with Django/Flask is a plus. A proactive attitude and willingness to learn are essential.,Prague,#,Gemini Synthetic
+Junior Data Analyst,Data Insights CZ,"Join our data team as a Junior Data Analyst! You'll be responsible for extracting, cleaning, and analyzing data to provide insights. Proficiency in SQL and Excel is required. Experience with Python or R is a plus.",Prague,#,Gemini Synthetic
+Junior Java Developer,Software Innovations,We are seeking a motivated Junior Java Developer to contribute to the development of our core platform. Knowledge of Spring Framework and Hibernate is beneficial. Teamwork and communication skills are crucial.,Prague,#,Gemini Synthetic
+Junior React Developer,Frontend Masters CZ,"Looking for a Junior React Developer to build user interfaces for our web applications. Familiarity with JavaScript, HTML, and CSS is required. Experience with Redux or Context API is a plus.",Prague,#,Gemini Synthetic
+Junior QA Tester,Quality First Ltd,"Join our QA team as a Junior QA Tester and ensure the quality of our software products. You will be responsible for creating and executing test cases, identifying bugs, and reporting issues. Attention to detail is essential.",Prague,#,Gemini Synthetic
+Junior DevOps Engineer,Cloud Solutions s.r.o.,"We are seeking a Junior DevOps Engineer to automate and streamline our software development processes. Experience with Linux, scripting, and CI/CD tools is a plus. A strong desire to learn and grow is required.",Prague,#,Gemini Synthetic
+Junior Python Developer,WebTech s.r.o.,"Contribute to our dynamic team as a Junior Python Developer, working on web applications and APIs. Experience with RESTful APIs and databases is a plus. Eager to learn and work with new technologies.",Prague,#,Gemini Synthetic
+Junior Data Analyst,Analytics Hub,"We need a Junior Data Analyst to help us make data-driven decisions. You'll work with various datasets, perform analysis, and create reports. Strong analytical and problem-solving skills are required.",Prague,#,Gemini Synthetic
+Junior Java Developer,CodeCrafters,Looking for a Junior Java Developer to join our team and develop enterprise applications. Knowledge of object-oriented programming and design patterns is important. A collaborative mindset is crucial.,Prague,#,Gemini Synthetic
+Junior React Developer,UI Wizards,Join our UI team as a Junior React Developer and help us build engaging user interfaces. Familiarity with modern JavaScript frameworks and UI libraries is preferred. Creativity and attention to detail are appreciated.,Prague,#,Gemini Synthetic
+Junior QA Tester,TestPros,"Seeking a Junior QA Tester to ensure the quality and reliability of our software products. You will be responsible for creating and executing test plans, reporting bugs, and verifying fixes.",Prague,#,Gemini Synthetic
+Junior DevOps Engineer,Automated Systems,We are seeking a Junior DevOps Engineer to help us automate our infrastructure and deployments. Experience with cloud platforms and infrastructure-as-code is a plus. A problem-solving attitude is essential.,Prague,#,Gemini Synthetic
+Junior Python Developer,Digital Solutions,Join our team as a Junior Python Developer and contribute to the development of innovative web applications. Knowledge of web frameworks and databases is desirable. A willingness to learn and grow is key.,Prague,#,Gemini Synthetic
+Junior Data Analyst,Insightful Data,"We need a Junior Data Analyst to help us extract insights from data and improve our business decisions. You will be responsible for data cleaning, analysis, and reporting. Strong communication skills are required.",Prague,#,Gemini Synthetic
+Junior Java Developer,Java Experts,Looking for a Junior Java Developer to join our team and build robust and scalable applications. Knowledge of Java EE and web services is advantageous. Teamwork and collaboration are essential.,Prague,#,Gemini Synthetic
+Junior React Developer,React Masters,Join our team as a Junior React Developer and help us create amazing user experiences. Familiarity with React ecosystem and best practices is preferred. A passion for front-end development is crucial.,Prague,#,Gemini Synthetic
+Junior QA Tester,Quality Assurance Group,"Seeking a Junior QA Tester to ensure the quality and reliability of our software products. You will be responsible for creating test cases, executing tests, and reporting defects. Attention to detail is important.",Prague,#,Gemini Synthetic
+Junior DevOps Engineer,DevOps Solutions,We are seeking a Junior DevOps Engineer to help us automate our infrastructure and deployments. Experience with cloud platforms and configuration management tools is a plus. A problem-solving attitude is essential.,Prague,#,Gemini Synthetic
+Junior Python Developer,Python Pros,"We're seeking a motivated Junior Python Developer to work on our cutting-edge projects. You will work with APIs, backend systems, and data processing pipelines. Familiarity with various Python libraries is beneficial.",Prague,#,Gemini Synthetic
+Junior Web Developer (JavaScript),Web Development Inc.,"Join us as a Junior Web Developer focusing on JavaScript. You will assist in front-end development, using modern JavaScript frameworks. Basic knowledge of HTML, CSS, and JavaScript is needed.",Prague,#,Gemini Synthetic
+Entry-Level IT Support Specialist,Tech Support CZ,"We need an Entry-Level IT Support Specialist to provide technical assistance to our users. You will troubleshoot hardware and software issues, and maintain IT infrastructure. Good communication skills required.",Prague,#,Gemini Synthetic
+Associate Software Engineer,Software Architects Ltd.,"As an Associate Software Engineer, you'll contribute to developing high-quality software solutions. You'll work on various programming tasks and collaborate with senior engineers. Knowledge of any programming language is a plus.",Prague,#,Gemini Synthetic
+Junior Network Administrator,Net Solutions Ltd.,"We're looking for a Junior Network Administrator to assist in managing our network infrastructure. You'll monitor network performance, troubleshoot issues, and maintain network security. Basic networking knowledge is required.",Prague,#,Gemini Synthetic
+Junior Database Administrator,DB Management CZ,"Join our team as a Junior Database Administrator. You'll assist in managing and maintaining our database systems. You'll learn to create, optimize, and troubleshoot databases. Basic SQL knowledge is an advantage.",Prague,#,Gemini Synthetic
+Junior Security Analyst,CyberSec Solutions,"We are seeking a Junior Security Analyst to assist in monitoring and protecting our systems from cyber threats. You will learn to identify vulnerabilities, analyze security logs, and respond to incidents. Basic cybersecurity knowledge required.",Prague,#,Gemini Synthetic
+Junior Developer,Advanced Technologies,Looking for a Junior Developer to join our team and work on complex projects. Must have 5 years commercial experience in software development and senior level knowledge of multiple programming languages.,Prague,#,Gemini Synthetic
+Junior Software Engineer,Global Innovations,We are looking for a highly skilled Junior Software Engineer with 3+ years experience in developing scalable applications. Expertise in cloud technologies is a must.,Prague,#,Gemini Synthetic
+Junior Data Scientist,Data Analytics Group,We need a Junior Data Scientist with deep understanding of machine learning algorithms and proven experience with large datasets. 3+ years experience required.,Prague,#,Gemini Synthetic
+Intern - Web Developer,Web Solutions Ltd.,"We're looking for an Intern to work on our web development projects. 5 years commercial experience is a MUST. Expertise with HTML, CSS, JavaScript, and React is required.",Prague,#,Gemini Synthetic
+Junior DevOps Engineer,Cloud Infrastructure,"We need a Junior DevOps Engineer to help us automate our infrastructure. Experience with Kubernetes and Docker required, as well as 3+ years building and deploying complex applications.",Prague,#,Gemini Synthetic
+Junior QA Automation Engineer,Testing Experts,We are seeking a Junior QA Automation Engineer with expert knowledge of Selenium and Cypress. 3 years experience designing and maintaining test frameworks is a must.,Prague,#,Gemini Synthetic
+Junior System Administrator,SysAdmin Pros,Looking for a Junior System Administrator to manage our infrastructure. 5 years of experience with Linux server administration is a must.,Prague,#,Gemini Synthetic
+Junior Frontend Developer,Frontend Gurus,We need a skilled Junior Frontend Developer. Must be able to code UI as senior developer can. We required 3+ years experience with React and Typescript.,Prague,#,Gemini Synthetic
+Junior Backend Developer,Backend Specialists,We're looking for a Junior Backend Developer with expert knowledge of Node.js and Express.js. 3+ years in production.,Prague,#,Gemini Synthetic
+Junior Network Engineer,Network Aces,We require Junior Network Engineer with CCNA certificate and 5+ years experience. This role requires knowledge and experience usually held at a Senior Level.,Prague,#,Gemini Synthetic
+Senior Python Developer,Acme Solutions,We're looking for a Senior Python Developer to lead our backend team. You will be responsible for designing and implementing complex systems. Experience with microservices and cloud platforms is required.,Prague,#,Gemini Synthetic
+Lead Data Analyst,Data Insights CZ,"Join our data team as a Lead Data Analyst! You'll be responsible for guiding the team and delivering actionable insights. Expertise in SQL, Python, and data visualization tools is required.",Prague,#,Gemini Synthetic
+Senior Java Developer,Software Innovations,"We are seeking a Senior Java Developer to design and develop enterprise applications. Expertise in Spring Framework, Hibernate, and design patterns is required. Strong leadership skills are crucial.",Prague,#,Gemini Synthetic
+Engineering Manager,Frontend Masters CZ,"Looking for an Engineering Manager to lead our frontend development team. You will be responsible for managing the team, setting technical direction, and ensuring code quality. Experience with React and other frontend technologies is required.",Prague,#,Gemini Synthetic
+Senior DevOps Engineer,Cloud Solutions s.r.o.,"We are seeking a Senior DevOps Engineer to lead our automation and infrastructure efforts. Deep expertise with cloud platforms, CI/CD tools, and infrastructure-as-code is required. Leadership and mentoring skills are essential.",Prague,#,Gemini Synthetic
