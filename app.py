@@ -5,31 +5,31 @@ import google.generativeai as genai
 import time
 from core import ScorerEngine, load_real_db
 
-# === 1. CONFIG & STYLES (THE MAGIC PART) ===
+# === 1. CONFIG & STYLES ===
 st.set_page_config(
     page_title="AI Career Assistant", 
     layout="wide", 
-    page_icon="🚀",
+    page_icon="🟦",
     initial_sidebar_state="expanded"
 )
 
-# CUSTOM CSS FOR MODERN UI
+# MODERN CSS (ADAPTIVE LIGHT/DARK)
 st.markdown("""
 <style>
-    /* 1. Import Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
+    /* Шрифты */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
     html, body, [class*="css"]  {
         font-family: 'Inter', sans-serif;
     }
 
-    /* 2. Gradient Title Animation */
+    /* --- 1. Анимированный Градиент (Синий/Фиолетовый) --- */
     .title-text {
-        background: linear-gradient(45deg, #FF4B4B, #FF914D, #FF4B4B);
+        background: linear-gradient(90deg, #3B82F6, #8B5CF6, #06B6D4);
         background-size: 200% 200%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        animation: gradient 5s ease infinite;
+        animation: gradient 6s ease infinite;
         font-weight: 800;
         font-size: 3rem !important;
         padding-bottom: 10px;
@@ -41,40 +41,46 @@ st.markdown("""
         100% {background-position: 0% 50%;}
     }
 
-    /* 3. Modern Card Style for Jobs */
-    div[data-testid="stVerticalBlock"] > div[style*="flex-direction: column;"] > div[data-testid="stVerticalBlock"] {
-        /* Это хак для таргетинга контейнеров Streamlit, может требовать настройки */
-    }
-    
+    /* --- 2. Карточка Вакансии (Адаптивная) --- */
     .job-card {
-        background-color: #ffffff;
         padding: 20px;
         border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        border: 1px solid #e0e0e0;
         transition: transform 0.2s, box-shadow 0.2s;
         margin-bottom: 15px;
-    }
-    .job-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        border: 1px solid transparent;
     }
 
-    /* 4. Score Badge */
-    .score-circle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        font-weight: bold;
-        font-size: 1.2rem;
-        color: white;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    /* Стили для СВЕТЛОЙ темы (по умолчанию) */
+    .job-card {
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border-color: #e2e8f0;
+    }
+    .card-title { color: #1e293b; margin: 0; font-size: 1.25rem; font-weight: 700; }
+    .card-subtitle { color: #64748b; margin: 0; font-size: 0.9rem; }
+    .skill-pill { 
+        background-color: #f1f5f9; 
+        color: #334155; 
+        border: 1px solid #cbd5e1;
     }
 
-    /* 5. Skill Tags */
+    /* Стили для ТЕМНОЙ темы */
+    @media (prefers-color-scheme: dark) {
+        .job-card {
+            background-color: #262730; /* Темно-серый фон Streamlit */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border-color: #3f3f46;
+        }
+        .card-title { color: #f8fafc; } /* Почти белый текст */
+        .card-subtitle { color: #94a3b8; } /* Светло-серый текст */
+        .skill-pill {
+            background-color: #334155;
+            color: #e2e8f0;
+            border-color: #475569;
+        }
+    }
+
+    /* Общие стили для тегов */
     .skill-pill {
         display: inline-flex;
         align-items: center;
@@ -83,28 +89,31 @@ st.markdown("""
         font-size: 0.8rem;
         font-weight: 500;
         margin: 2px;
-        background-color: #f1f5f9;
-        color: #334155;
-        border: 1px solid #e2e8f0;
     }
     
     .missing-pill {
-        background-color: #fee2e2;
-        color: #991b1b;
-        border: 1px solid #fecaca;
+        background-color: rgba(239, 68, 68, 0.15) !important;
+        color: #ef4444 !important; /* Красный текст */
+        border-color: rgba(239, 68, 68, 0.3) !important;
     }
 
-    /* Dark Mode Adjustments */
-    @media (prefers-color-scheme: dark) {
-        .job-card {
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-        }
-        .skill-pill {
-            background-color: #2d3748;
-            color: #e2e8f0;
-            border-color: #4a5568;
-        }
+    .job-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    /* Кружок со скором */
+    .score-circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: white;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -132,11 +141,10 @@ else:
     api_key = st.sidebar.text_input("🔑 Gemini API Key", type="password")
     auth_status = "⚠️ Key missing"
 
-# === 4. SIDEBAR DESIGN ===
+# === 4. SIDEBAR ===
 with st.sidebar:
-    st.image("https://cdn-icons-png.flaticon.com/512/3048/3048122.png", width=60)
-    st.title("My Profile")
-    st.caption(f"{auth_status}")
+    st.title("👨‍💻 Profile")
+    st.caption(auth_status)
     
     uploaded_file = st.file_uploader("📄 Upload CV (PDF)", type="pdf")
     manual_text = st.text_area("Or paste text:", height=100)
@@ -151,35 +159,35 @@ with st.sidebar:
         only_remote = st.checkbox("🏠 Remote Only")
     
     st.markdown("---")
-    st.caption("v2.1 • Built with 🧠 & ☕ in Prague")
+    st.caption("v2.2 • Blue Tech Edition")
 
 # === 5. FUNCTIONS ===
 def generate_cover_letter_gemini(api_key, cv_text, job_description, company_name, job_title):
     if not api_key: return "⚠️ API Key missing."
     genai.configure(api_key=api_key)
+    # Используем проверенные модели
     models = ['models/gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-pro']
     
     for model_name in models:
         try:
             time.sleep(0.3)
             model = genai.GenerativeModel(model_name)
-            with st.spinner(f"✨ Magic happening with {model_name}..."):
+            with st.spinner(f"✨ Generating with {model_name}..."):
                 prompt = f"Write a 150-word cover letter. RESUME: {cv_text[:1000]}. JOB: {job_title} at {company_name}. DESC: {job_description[:1000]}. No placeholders."
                 response = model.generate_content(prompt)
                 if response.text: return response.text
         except: continue
     return "❌ AI is taking a nap. Try again."
 
-# === 6. HERO SECTION ===
+# === 6. MAIN UI ===
 st.markdown('<h1 class="title-text">AI Career Launchpad 🚀</h1>', unsafe_allow_html=True)
-st.markdown("### Stop searching. Start matching.")
-st.markdown("This tool uses **Neural Networks** to analyze your CV against real job market data in Prague.")
+st.markdown("### Find your perfect match.")
 
 if df_jobs.empty:
-    st.warning("⚠️ Database empty. Please run `python ingest_ai.py` to generate jobs.")
+    st.warning("⚠️ Database empty. Please run `python ingest_ai.py`.")
     st.stop()
 
-# CV Logic
+# CV Processing
 cv_text = ""
 if uploaded_file:
     cv_text = engine.extract_text_from_pdf(uploaded_file)
@@ -189,20 +197,19 @@ elif manual_text:
 if cv_text:
     user_skills = engine.extract_skills(cv_text)
     
-    # Stylish Skill Display
-    st.markdown("#### Your Detected Stack:")
+    # Отображение навыков (Синие теги)
+    st.markdown("#### Your Stack:")
     skills_html = "".join([f'<span class="skill-pill">{s}</span>' for s in user_skills])
     st.markdown(skills_html, unsafe_allow_html=True)
     
-    col_main_btn, _ = st.columns([1, 2])
-    with col_main_btn:
-        if st.button("🔥 Find My Dream Job", type="primary", use_container_width=True):
-            st.session_state.calculated = True
+    st.write("")
+    if st.button("🔥 Analyze Market", type="primary", use_container_width=True):
+        st.session_state.calculated = True
 
     st.markdown("---")
 
     if st.session_state.calculated:
-        # FILTERING
+        # Filtering
         filtered_df = df_jobs.copy()
         if selected_loc != "All Locations":
             filtered_df = filtered_df[filtered_df['Location'] == selected_loc]
@@ -218,80 +225,68 @@ if cv_text:
             filtered_df['Score'] = scores
             filtered_df = filtered_df.sort_values(by='Score', ascending=False).head(15)
 
-            st.subheader(f"🏆 Top {len(filtered_df)} Opportunities")
+            st.subheader(f"🏆 Top {len(filtered_df)} Recommendations")
             
-            # === NEW CARD LAYOUT ===
             for idx, row in filtered_df.iterrows():
                 score = row['Score']
                 missing = engine.analyze_gaps(user_skills, row['description'])
                 
-                # Dynamic Colors
+                # Colors (Blue/Green theme)
                 if score >= 70: 
-                    bg_color = "#2ecc71" # Green
-                    status_text = "Perfect Match"
+                    bg_color = "#10B981" # Emerald Green
+                    status_text = "Excellent"
                 elif score >= 50: 
-                    bg_color = "#f1c40f" # Yellow
-                    status_text = "Good Fit"
+                    bg_color = "#3B82F6" # Tech Blue
+                    status_text = "Good"
                 else: 
-                    bg_color = "#e74c3c" # Red
+                    bg_color = "#64748B" # Slate Grey
                     status_text = "Reach"
 
-                # CARD CONTAINER
-                with st.container():
-                    # Custom HTML Header for the Card to make it look nicer than standard Streamlit
-                    st.markdown(f"""
-                    <div class="job-card">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <div>
-                                <h3 style="margin:0; color:#1e293b;">{row['title']}</h3>
-                                <p style="margin:0; color:#64748b; font-size:0.9rem;">
-                                    🏢 <b>{row['company']}</b> &nbsp;•&nbsp; 📍 {row['Location']}
-                                </p>
-                            </div>
-                            <div class="score-circle" style="background-color: {bg_color};">
-                                {int(score)}%
-                            </div>
+                # HTML CARD
+                st.markdown(f"""
+                <div class="job-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <h3 class="card-title">{row['title']}</h3>
+                            <p class="card-subtitle">
+                                🏢 <b>{row['company']}</b> &nbsp;•&nbsp; 📍 {row['Location']}
+                            </p>
                         </div>
-                    """, unsafe_allow_html=True)
-                    
-                    # Missing Skills Logic
-                    if missing:
-                        missing_html = "".join([f'<span class="skill-pill missing-pill">{s}</span>' for s in missing[:4]])
-                        if len(missing) > 4: missing_html += f'<span class="skill-pill missing-pill">+{len(missing)-4} more</span>'
-                        st.markdown(f"<div style='margin-top:10px;'><b>Missing:</b> {missing_html}</div>", unsafe_allow_html=True)
+                        <div class="score-circle" style="background-color: {bg_color};">
+                            {int(score)}%
+                        </div>
+                    </div>
+                """, unsafe_allow_html=True)
+                
+                # Missing Skills
+                if missing:
+                    missing_html = "".join([f'<span class="skill-pill missing-pill">{s}</span>' for s in missing[:5]])
+                    st.markdown(f"<div style='margin-top:10px;'><b>Missing:</b> {missing_html}</div>", unsafe_allow_html=True)
+                else:
+                    st.markdown("<div style='margin-top:10px; color:#10B981;'><b>✨ Full Match!</b></div>", unsafe_allow_html=True)
+
+                st.markdown("</div>", unsafe_allow_html=True) # End card
+
+                # BUTTONS
+                c1, c2, c3 = st.columns([1, 1, 2])
+                with c1:
+                    if row['url'] and row['url'] != "#":
+                        st.link_button("👉 Apply", row['url'], use_container_width=True, key=f"btn_{idx}")
                     else:
-                        st.markdown("<div style='margin-top:10px; color:#2ecc71;'><b>✨ You have the full stack!</b></div>", unsafe_allow_html=True)
-
-                    st.markdown("</div>", unsafe_allow_html=True) # Close card div
-
-                    # ACTION BUTTONS (Streamlit native widgets underneath the HTML card)
-                    c1, c2, c3 = st.columns([1, 1, 2])
-                    with c1:
-                        if row['url'] and row['url'] != "#":
-                            st.link_button("👉 Apply", row['url'], use_container_width=True)
-                        else:
-                            st.button("No Link", disabled=True, key=f"nl_{idx}", use_container_width=True)
-                    
-                    with c2:
-                         # Expander for details
-                        with st.popover("📄 Details", use_container_width=True):
-                            st.markdown(f"### {row['title']}")
-                            st.write(row['description'])
-
-                    with c3:
-                        # AI Letter
-                        popover = st.popover("🤖 Write Letter", use_container_width=True)
-                        if popover.button("Generate with AI", key=f"gen_{idx}", type="primary"):
-                            letter = generate_cover_letter_gemini(
-                                api_key, cv_text, row['description'], row['company'], row['title']
-                            )
-                            popover.text_area("Your Draft:", value=letter, height=300)
-                    
-                    st.write("") # Spacer
+                        st.button("No Link", disabled=True, key=f"nl_{idx}", use_container_width=True)
+                with c2:
+                    with st.popover("📄 Details", use_container_width=True):
+                        st.markdown(f"### {row['title']}")
+                        st.write(row['description'])
+                with c3:
+                    popover = st.popover("🤖 Draft Letter", use_container_width=True)
+                    if popover.button("Generate", key=f"gen_{idx}", type="primary"):
+                        letter = generate_cover_letter_gemini(api_key, cv_text, row['description'], row['company'], row['title'])
+                        popover.text_area("Result:", value=letter, height=300)
+                
+                st.write("") # Spacer
 
         else:
-            st.info("No jobs found with these filters.")
-
+            st.info("No jobs found.")
 else:
-    # EMPTY STATE UI
-    st.info("👈 Upload your CV in the sidebar to unlock your career.")
+    st.info("👈 Upload your CV to start.")
