@@ -78,7 +78,7 @@ st.markdown("""
         .job-card { background-color: #262730; border-color: #3f3f46; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
     }
 
-    /* --- СТИЛИ ДЛЯ БОЛЬШОГО СКОРА --- */
+    /* БОЛЬШОЙ СКОР */
     .big-score {
         font-size: 2.5rem;
         font-weight: 800;
@@ -140,24 +140,23 @@ with st.sidebar:
         selected_loc = st.selectbox("📍 City", locations)
         only_remote = st.checkbox("🏠 Remote Only")
     st.markdown("---")
-    st.caption("v2.5 • Big Score UI")
+    st.caption("v2.6 • Stable UI")
 
 # === 5. FUNCTIONS ===
 def generate_cover_letter_gemini(api_key, cv_text, job_description, company_name, job_title):
     if not api_key: return "⚠️ API Key missing."
     genai.configure(api_key=api_key)
-    # Используем модели из твоего списка
-    models = ['models/gemini-2.0-flash', 'models/gemini-2.0-flash-exp', 'gemini-1.5-flash', 'gemini-pro']
+    models = ['models/gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-pro']
     for model_name in models:
         try:
-            time.sleep(0.5)
+            time.sleep(0.3)
             model = genai.GenerativeModel(model_name)
             with st.spinner(f"✨ Generating with {model_name}..."):
                 prompt = f"Write a 150-word cover letter. RESUME: {cv_text[:1000]}. JOB: {job_title} at {company_name}. DESC: {job_description[:1000]}. No placeholders."
                 response = model.generate_content(prompt)
                 if response.text: return response.text
         except: continue
-    return "❌ AI is taking a nap. Try again later."
+    return "❌ AI is taking a nap. Try again."
 
 # === 6. MAIN UI ===
 st.markdown('<h1 class="title-text">AI Internship Scorer 🚀</h1>', unsafe_allow_html=True)
@@ -211,37 +210,34 @@ if cv_text:
                 
                 # Colors
                 if score >= 70: 
-                    score_color = "#10B981" # Green
+                    score_color = "#10B981"
                     status_text = "HIGH MATCH"
                 elif score >= 50: 
-                    score_color = "#3B82F6" # Blue
+                    score_color = "#3B82F6"
                     status_text = "MEDIUM MATCH"
                 else: 
-                    score_color = "#94A3B8" # Grey
+                    score_color = "#94A3B8"
                     status_text = "LOW MATCH"
 
-                # HTML CARD
-                # ВАЖНО: Весь HTML собран в одну переменную для надежности
+                # HTML CARD GENERATION
+                # Используем f-строку без лишних отступов и комментариев, чтобы не сломать Markdown
                 card_html = f"""
-                <div class="job-card">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        
-                        <div style="flex: 1; padding-right: 20px;">
-                            <h3 style="margin:0; font-size: 1.4rem; color:inherit;">{row['title']}</h3>
-                            <p style="margin:6px 0 0 0; opacity:0.8; font-size:1rem;">
-                                🏢 <b>{row['company']}</b> &nbsp;•&nbsp; 📍 {row['Location']}
-                            </p>
-                        </div>
-
-                        <div style="text-align:right; min-width: 120px;">
-                            <div class="big-score" style="color: {score_color};">{int(score)}%</div>
-                            <div class="status-label" style="color: {score_color};">{status_text}</div>
-                        </div>
-
-                    </div>
-                """
+<div class="job-card">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div style="flex: 1; padding-right: 20px;">
+            <h3 style="margin:0; font-size: 1.4rem; color:inherit;">{row['title']}</h3>
+            <p style="margin:6px 0 0 0; opacity:0.8; font-size:1rem;">
+                🏢 <b>{row['company']}</b> &nbsp;•&nbsp; 📍 {row['Location']}
+            </p>
+        </div>
+        <div style="text-align:right; min-width: 120px;">
+            <div class="big-score" style="color: {score_color};">{int(score)}%</div>
+            <div class="status-label" style="color: {score_color};">{status_text}</div>
+        </div>
+    </div>
+"""
                 
-                # Missing Skills Block
+                # Добавляем навыки
                 if missing:
                     missing_html = "".join([f'<span class="skill-tag missing-tag">{s}</span>' for s in missing[:5]])
                     if len(missing) > 5: missing_html += f'<span class="skill-tag missing-tag">+{len(missing)-5}</span>'
@@ -249,12 +245,12 @@ if cv_text:
                 else:
                     card_html += f"<div style='margin-top:16px; color:{score_color}; font-weight:600;'>✨ Perfect Technical Match!</div>"
 
-                card_html += "</div>" # Close card
+                card_html += "</div>"
 
-                # RENDER HTML
+                # === РЕНДЕРИНГ HTML (Самое важное!) ===
                 st.markdown(card_html, unsafe_allow_html=True)
 
-                # BUTTONS ROW
+                # КНОПКИ
                 c1, c2, c3 = st.columns([1, 1, 2])
                 with c1:
                     if row['url'] and row['url'] != "#":
@@ -271,7 +267,7 @@ if cv_text:
                         letter = generate_cover_letter_gemini(api_key, cv_text, row['description'], row['company'], row['title'])
                         popover.text_area("Result:", value=letter, height=300)
                 
-                st.write("") # Spacer
+                st.write("") # Отступ
 
         else:
             st.info("No jobs found.")
